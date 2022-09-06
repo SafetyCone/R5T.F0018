@@ -23,7 +23,7 @@ namespace R5T.F0018
             string assemblyFilePath,
             IEnumerable<Func<Assembly, Task>> assemblyActions)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
@@ -42,7 +42,7 @@ namespace R5T.F0018
             IEnumerable<string> otherAssemblyDirectoryFilePaths,
             IEnumerable<Func<Assembly, Task>> assemblyActions)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(EnumerableHelper.From(assemblyDirectoryPath)
                 .Append(otherAssemblyDirectoryFilePaths));
@@ -84,7 +84,7 @@ namespace R5T.F0018
             string assemblyFilePath,
             IEnumerable<Action<Assembly>> assemblyActions)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
@@ -103,7 +103,7 @@ namespace R5T.F0018
             IEnumerable<string> otherAssemblyDirectoryFilePaths,
             IEnumerable<Action<Assembly>> assemblyActions)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(EnumerableHelper.From(assemblyDirectoryPath)
                 .AppendRange(otherAssemblyDirectoryFilePaths));
@@ -203,7 +203,7 @@ namespace R5T.F0018
             string assemblyFilePath,
             Func<Assembly, T> assemblyFunction)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
@@ -219,7 +219,7 @@ namespace R5T.F0018
             string assemblyFilePath,
             Func<Assembly, Task<T>> assemblyFunction)
         {
-            var assemblyDirectoryPath = Instances.PathOperator.GetDirectoryPathOfFilePath(assemblyFilePath);
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
