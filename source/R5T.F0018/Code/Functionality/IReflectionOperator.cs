@@ -25,7 +25,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
@@ -44,7 +44,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(EnumerableHelper.From(assemblyDirectoryPath)
+            var resolver = GetPathAssemblyResolver(Instances.EnumerableOperator.From(assemblyDirectoryPath)
                 .Append(otherAssemblyDirectoryFilePaths));
 
             using var metadataContext = new MetadataLoadContext(resolver);
@@ -62,9 +62,9 @@ namespace R5T.F0018
             string assemblyFilePath,
             Func<Assembly, Task> assemblyAction)
         {
-            return this.InAssemblyContext(
+            return InAssemblyContext(
                 assemblyFilePath,
-                EnumerableHelper.From(assemblyAction));
+                Instances.EnumerableOperator.From(assemblyAction));
         }
 
         /// <inheritdoc cref="InAssemblyContext(string, IEnumerable{Func{Assembly, Task}})"/>
@@ -73,10 +73,10 @@ namespace R5T.F0018
             IEnumerable<string> otherAssemblyDirectoryPaths,
             Func<Assembly, Task> assemblyAction)
         {
-            return this.InAssemblyContext(
+            return InAssemblyContext(
                 assemblyFilePath,
                 otherAssemblyDirectoryPaths,
-                EnumerableHelper.From(assemblyAction));
+                Instances.EnumerableOperator.From(assemblyAction));
         }
 
         /// <inheritdoc cref="InAssemblyContext(string, IEnumerable{Func{Assembly, Task}})"/>
@@ -86,7 +86,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
@@ -105,8 +105,10 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(EnumerableHelper.From(assemblyDirectoryPath)
-                .AppendRange(otherAssemblyDirectoryFilePaths));
+            var resolver = GetPathAssemblyResolver(Instances.EnumerableOperator.From(assemblyDirectoryPath)
+                .AppendRange(otherAssemblyDirectoryFilePaths)
+                // TODO: 
+                );
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
@@ -123,9 +125,9 @@ namespace R5T.F0018
             string assemblyFilePath,
             Action<Assembly> assemblyAction)
         {
-            this.InAssemblyContext(
+            InAssemblyContext(
                 assemblyFilePath,
-                EnumerableHelper.From(assemblyAction));
+                Instances.EnumerableOperator.From(assemblyAction));
         }
 
         /// <inheritdoc cref="InAssemblyContext(string, IEnumerable{Func{Assembly, Task}})"/>
@@ -134,10 +136,10 @@ namespace R5T.F0018
             IEnumerable<string> otherAssemblyDirectoryFilePaths,
             Action<Assembly> assemblyAction)
         {
-            this.InAssemblyContext(
+            InAssemblyContext(
                 assemblyFilePath,
                 otherAssemblyDirectoryFilePaths,
-                EnumerableHelper.From(assemblyAction));
+                Instances.EnumerableOperator.From(assemblyAction));
         }
 
         public string[] GetDirectoryDllFilePaths(string directoryPath)
@@ -151,7 +153,7 @@ namespace R5T.F0018
         {
             var assemblyFilePaths = assemblyDirectoryPaths
                 .SelectMany(assemblyDirectoryPath =>
-                    this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                    GetDirectoryDllFilePaths(assemblyDirectoryPath))
                 ;
 
             var resolver = new PathAssemblyResolver(assemblyFilePaths);
@@ -160,7 +162,7 @@ namespace R5T.F0018
 
         public PathAssemblyResolver GetPathAssemblyResolver_FromDirectoryPaths(params string[] assemblyDirectoryPaths)
         {
-            var output = this.GetPathAssemblyResolver_FromDirectoryPaths(assemblyDirectoryPaths.AsEnumerable());
+            var output = GetPathAssemblyResolver_FromDirectoryPaths(assemblyDirectoryPaths.AsEnumerable());
             return output;
         }
 
@@ -172,7 +174,7 @@ namespace R5T.F0018
             var assemblyFilePaths = assemblyDirectoryPaths
                 .Append(runtimeDirectoryPath)
                 .SelectMany(assemblyDirectoryPath =>
-                    this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                    GetDirectoryDllFilePaths(assemblyDirectoryPath))
                 ;
 
             var resolver = new PathAssemblyResolver(assemblyFilePaths);
@@ -183,7 +185,7 @@ namespace R5T.F0018
             string assemblyDirectoryPath,
             string runtimeDirectoryPath)
         {
-            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath, runtimeDirectoryPath);
+            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath, runtimeDirectoryPath);
             return resolver;
         }
 
@@ -192,7 +194,7 @@ namespace R5T.F0018
         {
             var runtimeDirectoryPath = RuntimeEnvironment.GetRuntimeDirectory();
 
-            var output = this.GetPathAssemblyResolver(
+            var output = GetPathAssemblyResolver(
                 assemblyDirectoryPath,
                 runtimeDirectoryPath);
 
@@ -205,7 +207,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
@@ -221,7 +223,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
