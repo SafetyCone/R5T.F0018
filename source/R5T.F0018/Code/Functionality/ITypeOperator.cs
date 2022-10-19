@@ -8,7 +8,7 @@ using R5T.T0132;
 namespace R5T.F0018
 {
 	[FunctionalityMarker]
-	public partial interface ITypeOperator : IFunctionalityMarker
+	public partial interface ITypeOperator : IFunctionalityMarker, F0000.ITypeOperator
 	{
         // Source: https://stackoverflow.com/a/1613936/10658484
         public IEnumerable<Type> GetOnlyDirectlyImplementedInterfaces(Type type)
