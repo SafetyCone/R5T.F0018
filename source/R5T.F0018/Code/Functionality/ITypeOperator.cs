@@ -56,7 +56,7 @@ namespace R5T.F0018
 
         public bool HasBaseType(Type type)
         {
-            var hasBaseType = type.BaseType is not null;
+            var hasBaseType = type.BaseType is object;
             return hasBaseType;
         }
     }

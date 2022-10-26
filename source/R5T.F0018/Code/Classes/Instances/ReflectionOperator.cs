@@ -7,7 +7,7 @@ namespace R5T.F0018
     {
         #region Infrastructure
 
-        public static ReflectionOperator Instance { get; } = new();
+        public static IReflectionOperator Instance { get; } = new ReflectionOperator();
 
         private ReflectionOperator()
         {
