@@ -7,7 +7,17 @@ namespace R5T.F0018.Construction
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ReflectionOperator.Instance.InAssemblyContext(
+                @"C:\Temp\Publish\D8S.S0001\D8S.S0001.exe",
+                assembly =>
+                {
+                    F0000.AssemblyOperator.Instance.ForAllTypes(
+                        assembly,
+                        type =>
+                        {
+                            Console.WriteLine(type.FullName);
+                        });
+                });
         }
     }
 }

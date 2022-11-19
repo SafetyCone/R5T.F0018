@@ -174,7 +174,7 @@ namespace R5T.F0018
             var assemblyFilePaths = assemblyDirectoryPaths
                 .Append(runtimeDirectoryPath)
                 .SelectMany(assemblyDirectoryPath =>
-                    GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                    this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
                 ;
 
             var resolver = new PathAssemblyResolver(assemblyFilePaths);
@@ -185,7 +185,13 @@ namespace R5T.F0018
             string assemblyDirectoryPath,
             string runtimeDirectoryPath)
         {
-            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath, runtimeDirectoryPath);
+            var assemblyDirectoryPaths = new[]
+            {
+                assemblyDirectoryPath,
+                runtimeDirectoryPath,
+            };
+
+            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPaths);
             return resolver;
         }
 
@@ -194,7 +200,7 @@ namespace R5T.F0018
         {
             var runtimeDirectoryPath = RuntimeEnvironment.GetRuntimeDirectory();
 
-            var output = GetPathAssemblyResolver(
+            var output = this.GetPathAssemblyResolver(
                 assemblyDirectoryPath,
                 runtimeDirectoryPath);
 
