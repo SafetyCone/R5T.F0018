@@ -213,7 +213,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
