@@ -211,9 +211,33 @@ namespace R5T.F0018
             string assemblyFilePath,
             Func<Assembly, T> assemblyFunction)
         {
+            //// Cannot use ReflectionOnlyLoad, since it is unsupported since.NET Core... LAME!
+            //var assembly = Assembly.ReflectionOnlyLoadFrom(assemblyFilePath);
+
+            // Use metadata load context instead.
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
+
+            using var metadataContext = new MetadataLoadContext(resolver);
+
+            var assembly = metadataContext.LoadFromAssemblyPath(assemblyFilePath);
+
+            var output = assemblyFunction(assembly);
+            return output;
+        }
+
+        public T InAssemblyContext<T>(
+            string assemblyFilePath,
+            Func<Assembly, T> assemblyFunction,
+            string runtimeDirectoryPath)
+        {
+            // Use metadata load context instead.
+            var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
+
+            var resolver = this.GetPathAssemblyResolver(
+                assemblyDirectoryPath,
+                runtimeDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
