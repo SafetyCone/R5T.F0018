@@ -44,7 +44,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = GetPathAssemblyResolver(Instances.EnumerableOperator.From(assemblyDirectoryPath)
+            var resolver = GetPathAssemblyResolver_AddRuntimeDirectoryPath(Instances.EnumerableOperator.From(assemblyDirectoryPath)
                 .Append(otherAssemblyDirectoryFilePaths));
 
             using var metadataContext = new MetadataLoadContext(resolver);
@@ -105,7 +105,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = GetPathAssemblyResolver(Instances.EnumerableOperator.From(assemblyDirectoryPath)
+            var resolver = GetPathAssemblyResolver_AddRuntimeDirectoryPath(Instances.EnumerableOperator.From(assemblyDirectoryPath)
                 .AppendRange(otherAssemblyDirectoryFilePaths)
                 // TODO: 
                 );
@@ -166,7 +166,37 @@ namespace R5T.F0018
             return output;
         }
 
+        /// <summary>
+        /// Gets the path to the directory containing the assemblies (DLLs) of the currently executing runtime.
+        /// </summary>
+        public string GetExecutingRuntimeDirectoryPath()
+        {
+            var runtimeDirectoryPath = RuntimeEnvironment.GetRuntimeDirectory();
+            return runtimeDirectoryPath;
+        }
+
         public PathAssemblyResolver GetPathAssemblyResolver(
+            IEnumerable<string> assemblyDirectoryPaths)
+        {
+            var assemblyFilePaths = assemblyDirectoryPaths
+                .SelectMany(assemblyDirectoryPath =>
+                    this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                ;
+
+            var resolver = new PathAssemblyResolver(assemblyFilePaths);
+            return resolver;
+        }
+
+        public PathAssemblyResolver GetPathAssemblyResolver(
+            params string[] assemblyDirectoryPaths)
+        {
+            var resolver = this.GetPathAssemblyResolver(
+                assemblyDirectoryPaths.AsEnumerable());
+
+            return resolver;
+        }
+
+        public PathAssemblyResolver GetPathAssemblyResolver_AddRuntimeDirectoryPath(
             IEnumerable<string> assemblyDirectoryPaths)
         {
             var runtimeDirectoryPath = RuntimeEnvironment.GetRuntimeDirectory();
@@ -230,20 +260,33 @@ namespace R5T.F0018
         public T InAssemblyContext<T>(
             string assemblyFilePath,
             Func<Assembly, T> assemblyFunction,
-            string runtimeDirectoryPath)
+            IEnumerable<string> runtimeDirectoryPaths)
         {
             // Use metadata load context instead.
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
             var resolver = this.GetPathAssemblyResolver(
-                assemblyDirectoryPath,
-                runtimeDirectoryPath);
+                runtimeDirectoryPaths
+                    .Append(assemblyDirectoryPath));
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
             var assembly = metadataContext.LoadFromAssemblyPath(assemblyFilePath);
 
             var output = assemblyFunction(assembly);
+            return output;
+        }
+
+        public T InAssemblyContext<T>(
+            string assemblyFilePath,
+            Func<Assembly, T> assemblyFunction,
+            params string[] runtimeDirectoryPaths)
+        {
+            var output = this.InAssemblyContext<T>(
+                assemblyFilePath,
+                assemblyFunction,
+                runtimeDirectoryPaths.AsEnumerable());
+
             return output;
         }
 
