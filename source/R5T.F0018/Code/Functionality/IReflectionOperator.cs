@@ -86,7 +86,7 @@ namespace R5T.F0018
         {
             var assemblyDirectoryPath = Instances.PathOperator.GetParentDirectoryPath_ForFile(assemblyFilePath);
 
-            var resolver = GetPathAssemblyResolver(assemblyDirectoryPath);
+            var resolver = this.GetPathAssemblyResolver(assemblyDirectoryPath);
 
             using var metadataContext = new MetadataLoadContext(resolver);
 
@@ -125,7 +125,7 @@ namespace R5T.F0018
             string assemblyFilePath,
             Action<Assembly> assemblyAction)
         {
-            InAssemblyContext(
+            this.InAssemblyContext(
                 assemblyFilePath,
                 Instances.EnumerableOperator.From(assemblyAction));
         }
@@ -175,7 +175,40 @@ namespace R5T.F0018
             return runtimeDirectoryPath;
         }
 
+        public IEnumerable<string> FilterDuplicates_ByFileName(
+            IEnumerable<string> assemblyFilePaths)
+        {
+            var duplicates = assemblyFilePaths
+                .GroupBy(filePath => Instances.PathOperator.GetFileName(filePath))
+                .Where(group => group.Count() > 1)
+                .Select(group => group.First())
+                .Now();
+
+            var nonDuplicateAssemblyFilePaths = assemblyFilePaths
+                .Except(duplicates);
+
+            return nonDuplicateAssemblyFilePaths;
+        }
+
         public PathAssemblyResolver GetPathAssemblyResolver(
+            IEnumerable<string> assemblyDirectoryPaths)
+        {
+            // First get *all* assembly file paths.
+            var assemblyFilePaths = assemblyDirectoryPaths
+                .SelectMany(assemblyDirectoryPath =>
+                    this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                ;
+
+            // Then filter out any duplicates.
+            var nonDuplicateAssemblyFilePaths = this.FilterDuplicates_ByFileName(assemblyFilePaths);
+
+            // Now get the path assembly resolver.
+            var resolver = new PathAssemblyResolver(nonDuplicateAssemblyFilePaths);
+            return resolver;
+        }
+
+        
+        public PathAssemblyResolver GetPathAssemblyResolver_WithoutDuplicateFiltering(
             IEnumerable<string> assemblyDirectoryPaths)
         {
             var assemblyFilePaths = assemblyDirectoryPaths
