@@ -16,6 +16,16 @@ namespace R5T.F0018
     [DraftFunctionalityMarker]
     public interface IReflectionOperator : IDraftFunctionalityMarker
     {
+        public IEnumerable<MethodInfo>Get_Methods(TypeInfo typeInfo)
+        {
+            return typeInfo.DeclaredMethods;
+        }
+
+        public IEnumerable<PropertyInfo> Get_Properties(TypeInfo typeInfo)
+        {
+            return typeInfo.DeclaredProperties;
+        }
+
         /// <summary>
         /// Can use <inheritdoc cref="Glossary.ForOutput.OutputByClosure" path="/name"/> to return outputs from the assembly action.
         /// </summary>

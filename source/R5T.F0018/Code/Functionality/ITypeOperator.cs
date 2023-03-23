@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
+using R5T.F0000;
 using R5T.T0132;
 
 
@@ -27,15 +29,15 @@ namespace R5T.F0018
         }
 
         public Func<Type, bool> GetTypeByHasAttributeOfNamespacedTypeNamePredicate(
-            string markerAttributeNamespacedTypeName)
+            string attributeNamespacedTypeName)
         {
-            bool Internal(Type typeInfo)
+            bool Internal(Type type)
             {
                 var output = true
-                   // Does it have the functionality marker attribute?
+                   // Does the type have the attribute?
                    && this.HasAttributeOfType(
-                       typeInfo,
-                       markerAttributeNamespacedTypeName)
+                       type,
+                       attributeNamespacedTypeName)
                    ;
 
                 return output;
@@ -64,14 +66,11 @@ namespace R5T.F0018
             return typeName;
         }
 
-        public bool HasAttributeOfType(
+        public WasFound<CustomAttributeData> HasAttributeOfType(
             Type type,
             string attributeTypeNamespacedTypeName)
         {
-            var output = type.CustomAttributes
-                .Where(xAttribute => xAttribute.AttributeType.FullName == attributeTypeNamespacedTypeName)
-                .Any();
-
+            var output = Instances.MemberOperator.HasAttributeOfType(type, attributeTypeNamespacedTypeName);
             return output;
         }
 
@@ -79,6 +78,12 @@ namespace R5T.F0018
         {
             var hasBaseType = type.BaseType is object;
             return hasBaseType;
+        }
+
+        public bool IsObsolete(Type type)
+        {
+            var output = Instances.MemberOperator.IsObsolete(type);
+            return output;
         }
     }
 }

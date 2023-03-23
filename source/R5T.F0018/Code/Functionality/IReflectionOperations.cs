@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -11,6 +13,12 @@ namespace R5T.F0018
     [FunctionalityMarker]
     public partial interface IReflectionOperations : IFunctionalityMarker
     {
+        public string Describe_Type(TypeInfo type)
+        {
+            var typeName = Instances.TypeOperator.GetNameOf(type);
+            return typeName;
+        }
+
         /// <summary>
         /// Determines whether the method is a property get or set method.
         /// </summary>
@@ -53,6 +61,45 @@ namespace R5T.F0018
                 methodSelector);
 
             methodsOnTypes.ForEach(tuple => action(tuple.TypeInfo, tuple.MethodInfo));
+        }
+
+        /// <inheritdoc cref="IAssemblyOperator.Get_TypesInAssembly(Assembly)"/>
+        public IEnumerable<TypeInfo> Get_TypesInAssembly(Assembly assembly)
+        {
+            return Instances.AssemblyOperator.Get_TypesInAssembly(assembly);
+        }
+
+        public void List_TypesInAssembly(
+            Assembly assembly,
+            Action<string> typeDescriptionConsumer)
+        {
+            var types = this.Get_TypesInAssembly(assembly);
+
+            foreach (var type in types)
+            {
+                var descriptionOfType = this.Describe_Type(type);
+
+                typeDescriptionConsumer(descriptionOfType);
+            }
+        }
+
+        public void List_TypesInAssembly(
+            Assembly assembly,
+            TextWriter writer)
+        {
+            Action<string> typeDescriptionConsumer = description => writer.WriteLine(description);
+
+            this.List_TypesInAssembly(
+                assembly,
+                typeDescriptionConsumer);
+        }
+
+        public void List_TypesInAssembly_ToConsole(
+            Assembly assembly)
+        {
+            this.List_TypesInAssembly(
+                assembly,
+                Console.Out);
         }
 
         public IEnumerable<(TypeInfo TypeInfo, MethodInfo MethodInfo)> SelectMethodsOnTypes(
