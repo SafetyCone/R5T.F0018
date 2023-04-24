@@ -16,8 +16,8 @@ namespace R5T.F0018.F001
 
         public void InMethodContext_Synchronous(
             string assemblyFilePath,
-            TypeName typeName,
-            MethodName methodName,
+            ITypeName typeName,
+            IMethodName methodName,
             Action<MethodInfo> methodInfoAction)
         {
             this.InTypeContext_Synchronous(
@@ -35,8 +35,8 @@ namespace R5T.F0018.F001
 
         public void InPropertyContext_Synchronous(
             string assemblyFilePath,
-            TypeName typeName,
-            PropertyName propertyName,
+            ITypeName typeName,
+            IPropertyName propertyName,
             Action<PropertyInfo> propertyInfoAction)
         {
             this.InTypeContext_Synchronous(
@@ -54,7 +54,7 @@ namespace R5T.F0018.F001
 
         public void InTypeContext_Synchronous(
         string assemblyFilePath,
-        TypeName typeName,
+        ITypeName typeName,
         Action<TypeInfo> typeInfoAction)
         {
             StringlyTypedOperator.InAssemblyContext(

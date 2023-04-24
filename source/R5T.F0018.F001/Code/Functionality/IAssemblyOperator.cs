@@ -14,7 +14,7 @@ namespace R5T.F0018.F001
 
         public TypeInfo Select_Type(
             Assembly assembly,
-            TypeName typeName)
+            ITypeName typeName)
         {
             var typeInfo = StringlyTypedOperator.Select_Type(
                 assembly,

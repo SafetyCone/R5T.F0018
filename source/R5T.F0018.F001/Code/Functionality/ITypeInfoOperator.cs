@@ -23,7 +23,7 @@ namespace R5T.F0018.F001
         /// <inheritdoc cref="F0018.ITypeInfoOperator.Select_Method(TypeInfo, string)"/>
         public MethodInfo Select_Method(
             TypeInfo typeInfo,
-            MethodName methodName)
+            IMethodName methodName)
         {
             var methodInfo = StringlyTypedOperator.Select_Method(
                 typeInfo,
@@ -35,7 +35,7 @@ namespace R5T.F0018.F001
         /// <inheritdoc cref="F0018.ITypeInfoOperator.Select_Property(TypeInfo, string)"/>
         public PropertyInfo Select_Property(
             TypeInfo typeInfo,
-            PropertyName propertyName)
+            IPropertyName propertyName)
         {
             var propertyInfo = StringlyTypedOperator.Select_Property(
                 typeInfo,

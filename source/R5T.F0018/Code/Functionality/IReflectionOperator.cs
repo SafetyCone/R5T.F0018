@@ -26,6 +26,29 @@ namespace R5T.F0018
             return typeInfo.DeclaredProperties;
         }
 
+        public IEnumerable<FieldInfo> Get_Fields_StaticReadonly_Object(TypeInfo typeInfo)
+        {
+            var output = typeInfo.DeclaredFields
+                .Where(field =>
+                {
+                    var isStatic = field.IsStatic;
+                    var isReadonly = field.IsInitOnly;
+
+                    var isObject = field.FieldType.FullName == "System.Object";
+
+                    var output = true
+                        && isStatic
+                        && isReadonly
+                        && isObject
+                        ;
+
+                    return output;
+                })
+                ;
+
+            return output;
+        }
+
         /// <summary>
         /// Can use <inheritdoc cref="Glossary.ForOutput.OutputByClosure" path="/name"/> to return outputs from the assembly action.
         /// </summary>
