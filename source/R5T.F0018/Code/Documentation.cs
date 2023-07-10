@@ -25,7 +25,7 @@ namespace R5T.F0018
         /// property name (simple method name)
         /// </summary>
         /// <remarks>
-        /// This is the confirmed behavior of <see cref="System.Reflection.PropertyInfo.Name"/>.
+        /// This is the confirmed behavior of <see cref="System.Reflection.MemberInfo.Name"/>.
         /// </remarks>
         public static readonly object PropertyNameMeansSimplePropertyName;
     }
