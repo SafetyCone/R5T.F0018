@@ -218,7 +218,10 @@ namespace R5T.F0018
                 .Now();
 
             var nonDuplicateAssemblyFilePaths = assemblyFilePaths
-                .Except(duplicates);
+                // Remove duplicates (all instances of anything with a duplicate), leaving only non-dupicates.
+                .Except(duplicates)
+                // Then add back each duplicate.
+                .Append(duplicates);
 
             return nonDuplicateAssemblyFilePaths;
         }
