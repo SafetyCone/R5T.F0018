@@ -233,6 +233,8 @@ namespace R5T.F0018
             var assemblyFilePaths = assemblyDirectoryPaths
                 .SelectMany(assemblyDirectoryPath =>
                     this.GetDirectoryDllFilePaths(assemblyDirectoryPath))
+                // Only add the distinct.
+                .Distinct()
                 ;
 
             // Then filter out any duplicates.
@@ -295,13 +297,17 @@ namespace R5T.F0018
         }
 
         public PathAssemblyResolver GetPathAssemblyResolver(
-            string assemblyDirectoryPath)
+            string assemblyDirectoryPath,
+            bool addRuntimeDirectoryPath = false)
         {
             var runtimeDirectoryPath = RuntimeEnvironment.GetRuntimeDirectory();
 
-            var output = this.GetPathAssemblyResolver(
-                assemblyDirectoryPath,
-                runtimeDirectoryPath);
+            var output = addRuntimeDirectoryPath
+                ? this.GetPathAssemblyResolver(
+                    assemblyDirectoryPath,
+                    runtimeDirectoryPath)
+                : this.GetPathAssemblyResolver( new[] { assemblyDirectoryPath })
+                ;
 
             return output;
         }

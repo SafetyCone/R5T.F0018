@@ -23,6 +23,12 @@ namespace R5T.F0018
             }
         }
 
+        //public IEnumerable<MemberInfo> Get_MemberInfos(Assembly assembly)
+        //{
+        //    // Foreach type in the assembly.
+        //    var types = this.Get_TypesInAssembly(assembly);
+        //}
+
         /// <summary>
         /// Returns <see cref="Assembly.DefinedTypes"/>.
         /// </summary>
