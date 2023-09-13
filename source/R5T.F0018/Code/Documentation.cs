@@ -9,11 +9,6 @@ namespace R5T.F0018
     public static class Documentation
     {
         /// <summary>
-        /// type name (fully qualified type name)
-        /// </summary>
-        public static readonly object TypeNameMeansFullyQualifiedTypeName;
-
-        /// <summary>
         /// method name (simple method name)
         /// </summary>
         /// <remarks>

@@ -63,10 +63,10 @@ namespace R5T.F0018
             methodsOnTypes.ForEach(tuple => action(tuple.TypeInfo, tuple.MethodInfo));
         }
 
-        /// <inheritdoc cref="IAssemblyOperator.Get_TypesInAssembly(Assembly)"/>
+        /// <inheritdoc cref="L0053.IAssemblyOperator.Enumerate_Types(Assembly)"/>
         public IEnumerable<TypeInfo> Get_TypesInAssembly(Assembly assembly)
         {
-            return Instances.AssemblyOperator.Get_TypesInAssembly(assembly);
+            return Instances.AssemblyOperator.Enumerate_Types(assembly);
         }
 
         public void List_TypesInAssembly(
@@ -87,11 +87,11 @@ namespace R5T.F0018
             Assembly assembly,
             TextWriter writer)
         {
-            Action<string> typeDescriptionConsumer = description => writer.WriteLine(description);
+            void TypeDescriptionConsumer(string description) => writer.WriteLine(description);
 
             this.List_TypesInAssembly(
                 assembly,
-                typeDescriptionConsumer);
+                TypeDescriptionConsumer);
         }
 
         public void List_TypesInAssembly_ToConsole(

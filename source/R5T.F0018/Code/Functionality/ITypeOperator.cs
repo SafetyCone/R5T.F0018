@@ -46,26 +46,6 @@ namespace R5T.F0018
             return Internal;
         }
 
-        /// <summary>
-        /// Returns the <inheritdoc cref="Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/> of the type.
-        /// </summary>
-        public string Get_TypeName(Type type)
-        {
-            // The full name corresponds to our concept of type name.
-            var typeName = type.FullName;
-            return typeName;
-        }
-
-        /// <inheritdoc cref="Get_TypeName(Type)"/>
-        public string Get_TypeNameOf<T>()
-        {
-            var type = this.GetTypeOf<T>();
-
-            // The full name corresponds to our concept of type name.
-            var typeName = this.Get_TypeName(type);
-            return typeName;
-        }
-
         public WasFound<CustomAttributeData> HasAttributeOfType(
             Type type,
             string attributeTypeNamespacedTypeName)
