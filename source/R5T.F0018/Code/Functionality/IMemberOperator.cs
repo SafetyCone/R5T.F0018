@@ -15,22 +15,19 @@ namespace R5T.F0018
             MemberInfo memberInfo,
             string attributeTypeNamespacedTypeName)
         {
-            var attributeOrDefault = memberInfo.CustomAttributes
-                .Where(xAttribute => xAttribute.AttributeType.FullName == attributeTypeNamespacedTypeName)
-                // Choose first even though there might be multiple since this function is more like "Any()".
-                .FirstOrDefault();
+            var exists = Instances.MemberInfoOperator.Has_AttributeOfType(
+                memberInfo,
+                attributeTypeNamespacedTypeName,
+                out var attributeOrDefault);
 
-            var output = WasFound.From(attributeOrDefault);
+            var output = WasFound.From(exists, attributeOrDefault);
             return output;
         }
 
         public bool IsObsolete(MemberInfo memberInfo)
         {
-            var hasObsoleteAttribute = this.HasAttributeOfType(
-                memberInfo,
-                Instances.TypeNames.ObsoleteAttribute);
-
-            return hasObsoleteAttribute;
+            var output = Instances.MemberInfoOperator.Is_Obsolete(memberInfo);
+            return output;
         }
     }
 }
