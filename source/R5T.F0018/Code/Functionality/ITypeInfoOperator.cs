@@ -10,7 +10,7 @@ namespace R5T.F0018
     [FunctionalityMarker]
     public partial interface ITypeInfoOperator : IFunctionalityMarker
     {
-        /// <inheritdoc cref="L0053.ITypeOperator.Get_TypeName(Type)"/>
+        /// <inheritdoc cref="L0066.ITypeOperator.Get_TypeName(Type)"/>
         public string Get_TypeName(TypeInfo typeInfo)
         {
             var typeName = Instances.TypeOperator.Get_TypeName(typeInfo);

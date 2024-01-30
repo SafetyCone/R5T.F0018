@@ -19,9 +19,9 @@ namespace R5T.F0018
         //}
 
         /// <summary>
-        /// Selects a type from the assembly based on its <inheritdoc cref="L0053.Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/>.
+        /// Selects a type from the assembly based on its <inheritdoc cref="L0066.Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/>.
         /// </summary>
-        /// <param name="typeName">The <inheritdoc cref="L0053.Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/> of the type.</param>
+        /// <param name="typeName">The <inheritdoc cref="L0066.Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/> of the type.</param>
         public TypeInfo Select_Type(
             Assembly assembly,
             string typeName)
