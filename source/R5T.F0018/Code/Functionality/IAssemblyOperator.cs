@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -10,14 +9,8 @@ namespace R5T.F0018
 {
     [FunctionalityMarker]
     public partial interface IAssemblyOperator : IFunctionalityMarker,
-        L0053.IAssemblyOperator
+        L0066.IAssemblyOperator
     {
-        //public IEnumerable<MemberInfo> Get_MemberInfos(Assembly assembly)
-        //{
-        //    // Foreach type in the assembly.
-        //    var types = this.Get_TypesInAssembly(assembly);
-        //}
-
         /// <summary>
         /// Selects a type from the assembly based on its <inheritdoc cref="L0066.Documentation.TypeNameMeansFullyQualifiedTypeName" path="/summary"/>.
         /// </summary>

@@ -23,7 +23,7 @@ namespace R5T.F0018
             return output;
         }
 
-        public bool IsObsolete(MemberInfo memberInfo)
+        public bool Is_Obsolete(MemberInfo memberInfo)
         {
             var output = Instances.MemberInfoOperator.Is_Obsolete(memberInfo);
             return output;

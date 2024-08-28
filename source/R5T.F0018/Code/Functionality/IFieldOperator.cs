@@ -11,7 +11,7 @@ namespace R5T.F0018
     {
         public bool IsObsolete(FieldInfo propertyInfo)
         {
-            var output = Instances.MemberOperator.IsObsolete(propertyInfo);
+            var output = Instances.MemberOperator.Is_Obsolete(propertyInfo);
             return output;
         }
     }

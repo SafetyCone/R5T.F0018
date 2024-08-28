@@ -380,5 +380,11 @@ namespace R5T.F0018
             var output = assemblyFunction(assembly);
             return output;
         }
+
+        public bool Is_FunctionMethod(MethodInfo methodInfo)
+            => Instances.MethodOperator.Is_FunctionMethod(methodInfo);
+
+        public bool Is_ValueProperty(PropertyInfo propertyInfo)
+            => Instances.PropertyOperator.Is_ValueProperty(propertyInfo);
     }
 }

@@ -12,6 +12,7 @@ namespace R5T.F0018.F001
     {
         private static F0018.IAssemblyOperator StringlyTypedOperator => F0018.AssemblyOperator.Instance;
 
+
         public TypeInfo Select_Type(
             Assembly assembly,
             ITypeName typeName)

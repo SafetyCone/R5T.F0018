@@ -11,7 +11,7 @@ namespace R5T.F0018
 {
 	[FunctionalityMarker]
 	public partial interface ITypeOperator : IFunctionalityMarker,
-        F0000.ITypeOperator
+        L0066.ITypeOperator
 	{
         // Source: https://stackoverflow.com/a/1613936/10658484
         public IEnumerable<Type> GetOnlyDirectlyImplementedInterfaces(Type type)
@@ -62,7 +62,7 @@ namespace R5T.F0018
 
         public bool IsObsolete(Type type)
         {
-            var output = Instances.MemberOperator.IsObsolete(type);
+            var output = Instances.MemberOperator.Is_Obsolete(type);
             return output;
         }
     }

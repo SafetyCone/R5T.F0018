@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using R5T.L0066.Extensions;
 using R5T.T0132;
 
 
@@ -15,25 +15,13 @@ namespace R5T.F0018
     {
         public string Describe_Type(TypeInfo type)
         {
-            var typeName = Instances.TypeOperator.GetNameOf(type);
+            var typeName = Instances.TypeOperator.Get_NameOf(type);
             return typeName;
         }
 
-        /// <summary>
-        /// Determines whether the method is a property get or set method.
-        /// </summary>
+        /// <inheritdoc cref="IMethodOperator.Is_PropertyMethod(MethodInfo)"/>
         public bool IsPropertyMethod(MethodInfo methodInfo)
-        {
-            var output = true
-                // All property methods have special names.
-                && methodInfo.IsSpecialName
-                && methodInfo.DeclaringType.GetProperties()
-                    .Any(property => false
-                        || property.GetGetMethod() == methodInfo
-                        || property.GetSetMethod() == methodInfo);
-
-            return output;
-        }
+            => Instances.MethodOperator.Is_PropertyMethod(methodInfo);
 
         public void ForPropertiesOnTypes(
             Assembly assembly,
@@ -46,7 +34,7 @@ namespace R5T.F0018
                 typeSelector,
                 propertySelector);
 
-            propertiesOnTypes.ForEach(tuple => action(tuple.TypeInfo, tuple.PropertyInfo));
+            propertiesOnTypes.For_Each(tuple => action(tuple.TypeInfo, tuple.PropertyInfo));
         }
 
         public void ForMethodsOnTypes(
@@ -60,10 +48,10 @@ namespace R5T.F0018
                 typeSelector,
                 methodSelector);
 
-            methodsOnTypes.ForEach(tuple => action(tuple.TypeInfo, tuple.MethodInfo));
+            methodsOnTypes.For_Each(tuple => action(tuple.TypeInfo, tuple.MethodInfo));
         }
 
-        /// <inheritdoc cref="L0053.IAssemblyOperator.Enumerate_Types(Assembly)"/>
+        /// <inheritdoc cref="L0066.IAssemblyOperator.Enumerate_Types(Assembly)"/>
         public IEnumerable<TypeInfo> Get_TypesInAssembly(Assembly assembly)
         {
             return Instances.AssemblyOperator.Enumerate_Types(assembly);
@@ -107,7 +95,7 @@ namespace R5T.F0018
             Func<TypeInfo, bool> typeSelector,
             Func<MethodInfo, bool> methodSelector)
         {
-            var output = F0000.AssemblyOperator.Instance.SelectTypes(assembly, typeSelector)
+            var output = Instances.AssemblyOperator.Select_Types(assembly, typeSelector)
                 .SelectMany(typeInfo => typeInfo.DeclaredMethods
                     .Where(methodSelector)
                     .Select(methodInfo => (typeInfo, methodInfo)));

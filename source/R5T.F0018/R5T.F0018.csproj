@@ -5,7 +5,9 @@
     <NoWarn>1573;1587;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\R5T.F0002\source\R5T.F0002\R5T.F0002.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0066\source\R5T.L0066\R5T.L0066.csproj" />
+    <ProjectReference Include="..\..\..\R5T.L0089\source\R5T.L0089\R5T.L0089.csproj" />
     <ProjectReference Include="..\..\..\R5T.NG0010\source\R5T.NG0010\R5T.NG0010.csproj" />
+    <ProjectReference Include="..\..\..\R5T.Y0000\source\R5T.Y0000\R5T.Y0000.csproj" />
   </ItemGroup>
 </Project>
