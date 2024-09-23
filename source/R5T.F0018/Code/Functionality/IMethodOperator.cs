@@ -10,6 +10,9 @@ namespace R5T.F0018
     [FunctionalityMarker]
     public partial interface IMethodOperator : IFunctionalityMarker
     {
+        /// <summary>
+        /// True if the method is public, and it is not a property method.
+        /// </summary>
         public bool Is_FunctionMethod(MethodInfo methodInfo)
         {
             var output = true

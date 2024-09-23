@@ -16,15 +16,29 @@ namespace R5T.F0018
     [DraftFunctionalityMarker]
     public interface IReflectionOperator : IDraftFunctionalityMarker
     {
-        public IEnumerable<MethodInfo>Get_Methods(TypeInfo typeInfo)
+        /// <summary>
+        /// Enumerates all methods of a type.
+        /// </summary>
+        public IEnumerable<MethodInfo> Enumerate_Methods(TypeInfo typeInfo)
         {
             return typeInfo.DeclaredMethods;
         }
 
-        public IEnumerable<PropertyInfo> Get_Properties(TypeInfo typeInfo)
+        public MethodInfo[] Get_Methods(TypeInfo typeInfo)
+            => this.Enumerate_Methods(typeInfo)
+                .Now();
+
+        /// <summary>
+        /// Enumerates all properties of a type.
+        /// </summary>
+        public IEnumerable<PropertyInfo> Enumerate_Properties(TypeInfo typeInfo)
         {
             return typeInfo.DeclaredProperties;
         }
+
+        public PropertyInfo[] Get_Properties(TypeInfo typeInfo)
+            => this.Enumerate_Properties(typeInfo)
+                .Now();
 
         public IEnumerable<FieldInfo> Get_Fields_StaticReadonly_Object(TypeInfo typeInfo)
         {
@@ -381,9 +395,11 @@ namespace R5T.F0018
             return output;
         }
 
+        /// <inheritdoc cref="IMethodOperator.Is_FunctionMethod(MethodInfo)"/>
         public bool Is_FunctionMethod(MethodInfo methodInfo)
             => Instances.MethodOperator.Is_FunctionMethod(methodInfo);
 
+        /// <inheritdoc cref="IPropertyOperator.Is_ValueProperty(PropertyInfo)"/>
         public bool Is_ValueProperty(PropertyInfo propertyInfo)
             => Instances.PropertyOperator.Is_ValueProperty(propertyInfo);
     }

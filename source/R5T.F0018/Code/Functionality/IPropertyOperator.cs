@@ -16,17 +16,90 @@ namespace R5T.F0018
             return output;
         }
 
+        public bool Has_GetMethod(
+            PropertyInfo propertyInfo,
+            out MethodInfo getMethod)
+        {
+            getMethod = propertyInfo.GetMethod;
+
+            var output = Instances.NullOperator.Is_NotNull(getMethod);
+            return output;
+        }
+
+        public bool Has_GetMethod(PropertyInfo propertyInfo)
+            => this.Has_GetMethod(
+                propertyInfo,
+                out _);
+
+        public bool Has_Public_GetMethod(PropertyInfo propertyInfo)
+        {
+            var has_GetMethod = this.Has_GetMethod(
+                propertyInfo,
+                out var getMethod);
+
+            if(!has_GetMethod)
+            {
+                return false;
+            }
+
+            var output = Instances.MemberInfoOperator.Is_Public(getMethod);
+            return output;
+        }
+
+        public bool Has_SetMethod(
+            PropertyInfo propertyInfo,
+            out MethodInfo setMethod)
+        {
+            setMethod = propertyInfo.SetMethod;
+
+            var output = Instances.NullOperator.Is_NotNull(setMethod);
+            return output;
+        }
+
+        public bool Has_SetMethod(PropertyInfo propertyInfo)
+            => this.Has_SetMethod(
+                propertyInfo,
+                out _);
+
+        public bool Is_Without_SetMethod(PropertyInfo propertyInfo)
+            => !this.Has_SetMethod(propertyInfo);
+
+        /// <summary>
+        /// Is the property not an indexer property?
+        /// </summary>
+        public bool Is_Not_Indexer(PropertyInfo propertyInfo)
+        {
+            // Implemented by testing whether the property has any index parameters.
+            var output = !this.Is_Indexer(propertyInfo);
+            return output;
+        }
+
+        /// <summary>
+        /// Is the property an indexer property?
+        /// </summary>
+        public bool Is_Indexer(PropertyInfo propertyInfo)
+        {
+            var output = propertyInfo.GetIndexParameters().Any();
+            return output;
+        }
+
+        /// <summary>
+        /// True if:
+        /// <list type="number">
+        /// <item>The property has a public get-method.</item>
+        /// <item>The property does not have a set-method.</item>
+        /// <item>The property is not an indexer.</item>
+        /// </list>
+        /// </summary>
         public bool Is_ValueProperty(PropertyInfo propertyInfo)
         {
             var output = true
-                // Only properties with get methods.
-                && propertyInfo.GetMethod is object
                 // Only properties with public get methods.
-                && propertyInfo.GetMethod.IsPublic
+                && this.Has_Public_GetMethod(propertyInfo)
                 // Only properties *without* set methods.
-                && propertyInfo.SetMethod is null
+                && this.Is_Without_SetMethod(propertyInfo)
                 // Only properties that are *not* indexers (which is tested by seeing if the property has any index parameters).
-                && propertyInfo.GetIndexParameters().None()
+                && this.Is_Not_Indexer(propertyInfo)
                 ;
 
             return output;
