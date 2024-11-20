@@ -20,8 +20,10 @@ namespace R5T.F0018
 
             var interfaces = type.GetInterfaces();
 
+            var baseTypeInterfaces = type.BaseType.GetInterfaces();
+
             var output = hasBaseType
-                ? interfaces.Except(type.BaseType.GetInterfaces())
+                ? interfaces.Except(baseTypeInterfaces)
                 : interfaces
                 ;
 
