@@ -26,7 +26,7 @@ namespace R5T.F0018
 
         public MethodInfo[] Get_Methods(TypeInfo typeInfo)
             => this.Enumerate_Methods(typeInfo)
-                .Now();
+                .ToArray();
 
         /// <summary>
         /// Enumerates all properties of a type.
@@ -38,7 +38,7 @@ namespace R5T.F0018
 
         public PropertyInfo[] Get_Properties(TypeInfo typeInfo)
             => this.Enumerate_Properties(typeInfo)
-                .Now();
+                .ToArray();
 
         public IEnumerable<FieldInfo> Get_Fields_StaticReadonly_Object(TypeInfo typeInfo)
         {
@@ -229,7 +229,7 @@ namespace R5T.F0018
                 .GroupBy(filePath => Instances.PathOperator.Get_FileName(filePath))
                 .Where(group => group.Count() > 1)
                 .Select(group => group.First())
-                .Now();
+                .ToArray();
 
             var nonDuplicateAssemblyFilePaths = assemblyFilePaths
                 // Remove duplicates (all instances of anything with a duplicate), leaving only non-dupicates.
