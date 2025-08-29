@@ -51,7 +51,7 @@ namespace R5T.F0018
             methodsOnTypes.For_Each(tuple => action(tuple.TypeInfo, tuple.MethodInfo));
         }
 
-        /// <inheritdoc cref="L0066.IAssemblyOperator.Enumerate_Types(Assembly)"/>
+        /// <inheritdoc cref="F10Y.L0000.IAssemblyOperator.Enumerate_Types(Assembly)"/>
         public IEnumerable<TypeInfo> Get_TypesInAssembly(Assembly assembly)
         {
             return Instances.AssemblyOperator.Enumerate_Types(assembly);
